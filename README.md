@@ -80,7 +80,8 @@ Now the program must serialize a Java Object to a .ser file and then deserialize
 </details>
 
 <details> <summary><b> 📝 readme.txt (Command Line Instructions)</b></summary>
-text
+
+  
 === COMPILATION & EXECUTION INSTRUCTIONS ===
 
 1. First compile all Java files:
@@ -119,11 +120,17 @@ java -cp out SerializationDemo
 ✅ Cross-platform path handling
 
 ## 🏆 Best Practices Implemented
+
 ✔ Used File.separator for path compatibility
+
 ✔ Followed clean code principles
+
 ✔ Implemented proper exception handling
+
 ✔ Used relative paths in code
+
 ✔ Programmed in English
+
 
 ## 🤝 Contributions
 
