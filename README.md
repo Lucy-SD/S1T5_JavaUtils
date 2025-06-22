@@ -20,8 +20,11 @@ This repository contains Java exercises focused on:
 - **Command line execution**
 
 ## 💻 Technologies Used
+
 ☕ Java 21
+
 🧠 IntelliJ IDEA  
+
 ⌨️ Command Line Tools
 
 ## 📋 Requirements
@@ -104,10 +107,15 @@ java -cp out SerializationDemo
 
 
 ## 🎯 Learning Goals
+
 ✅ Java File I/O operations
+
 ✅ Directory traversal
+
 ✅ Object serialization/deserialization
+
 ✅ Command line compilation and execution
+
 ✅ Cross-platform path handling
 
 ## 🏆 Best Practices Implemented
@@ -118,11 +126,15 @@ java -cp out SerializationDemo
 ✔ Programmed in English
 
 ## 🤝 Contributions
+
 ⭐ Star the repository
+
 🍴 Fork the project
+
 📥 Create a pull request
 
 ## 🌐 Deployment
+
 For educational purposes only.
 
 ## 🚀 Thanks for Visiting!
