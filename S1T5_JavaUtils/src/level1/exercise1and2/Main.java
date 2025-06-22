@@ -1,7 +1,5 @@
 package level1.exercise1and2;
 
-import level1.exercise3and4.DirectoryManager;
-
 import java.util.Scanner;
 
 

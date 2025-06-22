@@ -11,19 +11,6 @@ public class User implements Serializable {
         this.age = age;
     }
 
-    public String getName() {
-        return this.name;
-    }
-    public int getAge(){
-        return this.age;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public void setAge(int age) {
-        this.age = age;
-    }
-
     public String toString () {
         return "Nombre: " + this.name + " .Edad: " + this.age + ".\n";
     }

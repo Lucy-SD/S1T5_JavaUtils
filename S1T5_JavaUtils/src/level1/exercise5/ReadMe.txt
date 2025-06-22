@@ -80,7 +80,7 @@ El proyecto consta de los siguientes archivos:
   - Si la ruta proporcionada está vacía:
         "Error: La ruta está vacía."
   - Si se ingresan caracteres alfabéticos en lugar de numéricos:
-         "Error. Por favor ingrese un valor numérico."
+        "Error. Por favor ingrese un valor numérico."
 
 ## Notas Adicionales:
 
