@@ -1,8 +1,11 @@
 # JavaUtils: File System Exercises
 
 👨‍💻 Author: Lucy Castro
+
 🧠 Learning Focus: Java File I/O, Serialization, and Command Line Execution
+
 🛠️ IDE: IntelliJ IDEA
+
 💡 Java SDK: 21
 
 ## 📄 Description
@@ -23,7 +26,9 @@ This repository contains Java exercises focused on:
 
 ## 📋 Requirements
 ✅ Java JDK 21
+
 ✅ IDE (IntelliJ IDEA or Eclipse)
+
 ✅ Basic command line knowledge
 
 ## 🛠️ Installation
