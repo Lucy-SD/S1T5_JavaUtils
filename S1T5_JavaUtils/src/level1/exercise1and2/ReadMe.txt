@@ -1,73 +1,100 @@
 # Manual de Compilación y Ejecución del Programa L1.E1y2:
 
+
+
 ## Estructura del Proyecto:
 
-El proyecto consta de los siguientes archivos:
-- `DirectoryLister.java`: Contiene los métodos principales que implementan las funcionalidades del programa.
-- `Main.java`: Contiene el método `main` para interactuar con el usuario y ejecutar las funcionalidades.
+** Estructura de paquetes **
+    level1/
+    └── exercise1and2/
+        ├── DirectoryLister.java
+        └── Main.java
 
-### Funcionalidades:
+** Archivos principales **
+    - `DirectoryLister.java`: Contiene la lógica para listar directorios y generar árboles.
+    - `Main.java`: Punto de entrada del programa con un menú interactivo.
 
-1. ** Mostrar Listado Alfabético en un Archivo **
-   - Genera un listado alfabético de los archivos y carpetas dentro de un directorio y lo muestra por consola.
-2. ** Mostrar Árbol de Directorios en un Archivo **
-   - Genera un árbol jerárquico de un directorio y sus subdirectorios, y lo muestra por consola.
 
-## Instrucciones de Compilación:
 
-1. ** Abrir un Terminal o Consola **
-   - Diríjase al directorio donde se encuentran los archivos `DirectoryLister.java` y `Main.java`.
-2. ** Compilar los Archivos **
-   - Use el siguiente comando para compilar los archivos:
-     javac -d . DirectoryLister.java Main.java
-   - Esto generará una estructura de directorios basada en el paquete `exercise1and2` y creará los archivos `.class` correspondientes.
+## Funcionalidades:
 
-## Instrucciones de Ejecución:
+** Listado Alfabético **
+    - Muestra archivos y subdirectorios ordenados alfabéticamente.
 
-1. ** Ejecutar el Programa **
-   - Ejecute el programa con el siguiente comando desde el directorio raíz del proyecto:
-     java exercise1and2.Main
-2. ** Interacción con el Usuario **
-   - El programa mostrará un menú con las siguientes opciones:
-        Elige una opción (0 - 2):
-           1. Listar Alfabéticamente un Directorio.
-           2. Ver Árbol de directorio por niveles y contenido.
-           0. Salir.
-3. ** Seleccionar Funcionalidad **
-   - Introduzca el número asociado a la funcionalidad que desea ejecutar y presione **Enter**.
+** Árbol de Directorios **
+    - Muestra estructura jerárquica de directorios con metadatos.
 
-## Funcionalidades Detalladas:
 
-### 1. ** Listar Alfabéticamente un Directorio **
-   -- Descripción --
-     Genera un listado alfabético de los archivos y subdirectorios dentro de un directorio y lo muestra por consola.
-     - Seleccione la opción `1` en el menú.
-     - Introduzca <ruta del directorio> que desea listar.
-   -- Salida esperada --
-     - Listado con los nombres de los archivos y subdirectorios ordenados alfabéticamente.
 
-### 2. ** Ver Árbol de directorio por niveles y contenido **
-   -- Descripción --
-     Genera un árbol jerárquico del directorio y sus subdirectorios, y lo muestra por consola.
-   -- Cómo usarlo --
-     - Seleccione la opción `2` del menú.
-     - Introduzca <ruta del directorio> cuya estructura desea ver.
-   -- Salida esperada --
-     - Estructura jerárquica del directorio.
+## Instrucciones para Consola:
+
+### Compilación y Ejecución:
+
+** Abrir un Terminal o Consola **
+    - Abre una terminal en la carpeta raíz del proyecto (donde está `src`)
+        cd /ruta/completa/a/S1T5_JavaUtils
+
+** Compila **
+   - Use el siguiente comando:
+        javac src/level1/exercise1and2/*.java
+
+** Ejecuta **
+   - Ejecute el siguiente comando:
+        java -cp src level1.exercise1and2.Main
+
+
+
+## Uso del Programa:
+
+### Al ejecutar, aparecerá el menú:
+
+=== MENÚ ===
+Elige una opción (0 - 2):
+1. Listar alfabéticamente un directorio;
+2. Ver el árbol de un directorio (por niveles y contenido);
+0. Salir.
+
+
+** Listado Alfabético **
+    - Selecciona la opción `1` del menú.
+    - Ingresa la ruta del directorio.
+    - Salida: listado del contenido del directorio ordenado alfabéticamente.
+
+** Árbol de Directorios **
+    - Selecciona la opción `2` del menú.
+    - Ingresa la ruta del directorio.
+    - Salida: árbol del directorio, ordenado por niveles y contenido, con las referencias:
+            "D" = directorio - "F" = archivo - "LM" = última modificación.
+
+
 
 ## Manejo de Errores relacionados con directorios y rutas:
 
-- ** Errores **
-  - Si el directorio no existe:
-        "Error: Directorio inexistente."
+** Errores **
   - Si la ruta proporcionada está vacía:
         "Error: La ruta está vacía."
+  - Si el directorio no existe:
+        "Error: Directorio inexistente."
+  - Si no se ingresa un valor numérico en le menú:
+        "Error: debe ingresar un valor numérico (0-2)"
+
 
 
 ## Notas Adicionales:
 
-- Asegúrese de proporcionar rutas válidas y accesibles desde el sistema operativo.
-- El programa es compatible con sistemas operativos Windows, macOS y Linux, siempre que las rutas se introduzcan
-en el formato correcto para cada sistema.
+** Formatos de ruta **
+   - Windows: Usa `\\` o `/` en rutas (`C:\\carpeta` o `C:/carpeta`)
+   - Linux/macOS: Usa `/` (`/home/usuario`)
+
+** Características **
+   - Marca directorios con `[D]` y archivos con `[F]`.
+   - Muestra fecha de última modificación con la referencia LM (formato: dd-MM-yyyy / HH:mm).
+   - Ordenamiento alfabético automático.
+
+** Requisitos **
+    - Java 8 o superior.
+    - Permisos de lectura en los directorios.
+
+
 
 Gracias por su Visita = )

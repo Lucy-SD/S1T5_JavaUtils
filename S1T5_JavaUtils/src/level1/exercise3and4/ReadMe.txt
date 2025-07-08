@@ -1,77 +1,115 @@
 # Manual de Compilación y Ejecución del Programa L1.E3y4:
 
+
+
 ## Estructura del Proyecto:
 
-El proyecto consta de los siguientes archivos:
-- `DirectoryManager.java`: Contiene los métodos principales que implementan las funcionalidades del programa.
-- `Main.java`: Contiene el método `main` para interactuar con el usuario y ejecutar las funcionalidades.
+** Estructura de paquetes **
+    level1/
+    └── exercise3and4/
+        ├── DirectoryManager.java
+        └── Main.java
 
-### Funcionalidades:
-
-1. ** Guardar un listado alfabético del contendido del directorio en un archivo .txt **
-   - Genera un listado alfabético de los archivos y carpetas dentro de un directorio y lo guarda en un archivo .txt.
-2. ** Guardar el árbol del directorio (en niveles y contenido) en un archivo .txt **
-   - Genera un árbol jerárquico de un directorio y sus subdirectorios, y lo guarda en un archivo .txt.
+** Archivos principales **
+    - `DirectoryManager.java`: Contiene la lógica para la generación de listados y árboles de directorios.
+    - `Main.java`: Punto de entrada del programa con un menú interactivo.
 
 
-## Instrucciones de Compilación:
 
-1. ** Abrir un Terminal o Consola **
-   - Diríjase al directorio donde se encuentran los archivos `DirectoryManager.java` y `Main.java`.
-2. ** Compilar los Archivos **
-   - Use el siguiente comando para compilar los archivos:
-     javac -d . DirectoryManager.java Main.java
-   - Esto generará una estructura de directorios basada en el paquete `exercise3and4` y creará los archivos `.class` correspondientes.
+## Funcionalidades:
 
-## Instrucciones de Ejecución:
+** Listado alfabético **
+   - Crea y guarda un archivo `.txt` con el listado del contenido del directorio ordenado.
 
-1. ** Ejecutar el Programa **
-   - Ejecute el programa con el siguiente comando desde el directorio raíz del proyecto:
-     java exercise3and4.Main
-2. ** Interacción con el Usuario **
-   - El programa mostrará un menú con las siguientes opciones:
-        Elige una opción (0 - 3):
-            1. Guardar un listado alfabético del contendido del directorio en un archivo .txt;
-            2. Guardar el árbol del directorio (en niveles y contenido) en un archivo .txt;
-            3. Ver el contenido de un archivo .txt;
-            0. Salir.
-3. ** Seleccionar Funcionalidad **
-   - Introduzca el número asociado a la funcionalidad que desea ejecutar y presione **Enter**.
+** Árbol del directorio **
+   - Crea y guarda un archivo `.txt` con la estructura jerárquica (niveles y contenido) del directorio.
 
-## Funcionalidades Detalladas:
+** Contenido de archivo **
+    - Muestra el contenido de un archivo de texto seleccionado.
 
-### 1. ** Guardar un listado alfabético del contendido del directorio en un archivo .txt **
-   -- Descripción --
-     Genera un listado alfabético de los archivos y subdirectorios dentro de un directorio y lo guarda en un archivo .txt.
-     - Seleccione la opción `1` en el menú.
-     - Introduzca <ruta del directorio> que desea listar.
-     - Introduzca <ruta y nombre del archivo de salida> donde desea guardar el listado.
-   -- Salida esperada --
-     - Creación y guardado del archivo en la ruta indicada. Mensaje de que se ha generado el archivo correctamente.
 
-### 2. ** Guardar el árbol del directorio (en niveles y contenido) en un archivo .txt **
-   -- Descripción --
-     Genera un árbol jerárquico del directorio y sus subdirectorios, y lo guarda en un archivo .txt.
-   -- Cómo usarlo --
-     - Seleccione la opción `2` del menú.
-     - Introduzca <ruta del directorio> cuya estructura desea generar.
-     - Introduzca <ruta y nombre del archivo de salida> donde desea guardar el árbol.
-   -- Salida esperada --
-     - Creación y guardado del árbol jerárquico del directorio en la ruta indicada. Mensaje de que se ha generado el archivo correctamente.
+
+## Instrucciones para Consola:
+
+### Compilación y Ejecución:
+
+** Abrir un Terminal o Consola **
+    - Abre una terminal en la carpeta raíz del proyecto (donde está `src`)
+        cd /ruta/completa/a/S1T5_JavaUtils
+
+** Compila **
+   - Use el siguiente comando:
+        javac src/level1/exercise3and4/*.java
+
+** Ejecuta **
+   - Ejecute el siguiente comando:
+        java -cp src level1.exercise3and4.Main
+
+
+
+## Uso del Programa:
+
+### Al ejecutar, aparecerá el menú:
+
+=== MENÚ ===
+Elige una opción (0 - 3):
+1. Guardar un listado alfabético del contenido del directorio en un archivo .txt;
+2. Guardar el árbol del directorio (en niveles y contenido) en un archivo .txt;
+3. Ver el contenido de un archivo .txt;
+0. Salir.
+
+
+** Listado alfabético **
+    - Selecciona la opción `1` del menú.
+    - Ingresa la ruta del directorio.
+    - Ingresa la ruta de guardado.
+    - Salida: mensaje de que se ha generado el archivo correctamente.
+
+** Árbol del directorio **
+    - Selecciona la opción `2` del menú.
+    - Ingresa la ruta del directorio.
+    - Ingresa la ruta de guardado.
+    - Salida: mensaje de que se ha generado el archivo correctamente.
+
+** Ver archivo **
+    - Selecciona la opción `3` del menú.
+    - Ingresa la ruta completa del archivo.
+    - Salida: contenido completo del archivo `.txt`.
+
+
 
 ## Manejo de Errores relacionados con directorios y rutas:
 
-- ** Errores **
-  - Si el directorio no existe:
-        "Error: Directorio inexistente."
+** Errores **
   - Si la ruta proporcionada está vacía:
         "Error: La ruta está vacía."
+  - Si el directorio no existe:
+        "Error: Directorio inexistente."
+  - Si no se ha proporcionado la ruta a un directorio:
+        "La ruta no es la de un directorio."
+  - Si el archivo no existe:
+        "El archivo no existe."
+  - Si no se ingresa un valor numérico en le menú:
+        "Error: debe ingresar un valor numérico (0-2)"
+
 
 
 ## Notas Adicionales:
 
-- Asegúrese de proporcionar rutas válidas y accesibles desde el sistema operativo.
-- El programa es compatible con sistemas operativos Windows, macOS y Linux, siempre que las rutas se introduzcan
-en el formato correcto para cada sistema.
+** Formatos de ruta **
+   - Windows: Usa `\\` o `/` en rutas (`C:\\carpeta` o `C:/carpeta`)
+   - Linux/macOS: Usa `/` (`/home/usuario`)
+
+** Características **
+   - Archivos `.txt` con codificación UTF-8.
+   - Marca directorios con `[D]` y archivos con `[F]`.
+   - Muestra fecha de última modificación con la referencia LM (formato: dd-MM-yyyy / HH:mm).
+   - Ordenamiento alfabético automático.
+
+** Requisitos **
+    - Java 8 o superior.
+    - Permisos de lectura en los directorios.
+
+
 
 Gracias por su Visita = )

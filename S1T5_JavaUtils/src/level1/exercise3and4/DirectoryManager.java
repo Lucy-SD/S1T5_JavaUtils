@@ -1,8 +1,6 @@
 package level1.exercise3and4;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
@@ -13,133 +11,126 @@ import java.util.stream.Stream;
 public class DirectoryManager {
 
     private final Scanner scan = new Scanner(System.in);
-    private String directoryPath;
-    private String outputPath;
-    private File directory;
-    private File[] files;
-    private FileWriter writer;
 
     private String pathNormalizer(String pathToNormalize) {
-        if (pathToNormalize == null) {
-            return null;
-        }
+        if (pathToNormalize == null) return "";
         return pathToNormalize.trim().replace("/", File.separator).replace("\\", File.separator);
     }
 
-    private void pathValidator(String pathToValidate) {
-        if (pathToValidate == null || pathToValidate.isBlank()) {
-            throw new IllegalArgumentException("La ruta no es correcta.");
+    private void validatePath(String path) {
+        if (path == null || path.isBlank()) {
+            throw new IllegalArgumentException("La ruta no puede estar vacía.");
         }
     }
 
-    private void directoryValidator(String directoryToValidate) {
-        directory = new File(directoryToValidate);
-
-        if (!directory.isDirectory() || !directory.exists()) {
+    private void validateDirectory(String directoryPath) {
+        File dir = new File(directoryPath);
+        if (!dir.exists()) {
             throw new IllegalArgumentException("La ruta no existe.");
         }
+        if(!dir.isDirectory()) {
+            throw new IllegalArgumentException("La ruta no es la de un directorio.");
+        }
     }
 
-    private void alphabeticalSorter() {
-        directoryPath = pathNormalizer(directoryPath);
-        pathValidator(directoryPath);
-        directoryValidator(directoryPath);
+    private File[] getSortedFiles(String directoryPath) {
+        File dir = new File(directoryPath);
+        File[] files = dir.listFiles();
 
-        directory = new File(directoryPath);
-        files = directory.listFiles();
-
-        if (files == null) {
+        if (files == null || files.length == 0) {
             System.out.println("El directorio está vacío.");
-            return;
+            return new File[0];
         }
         Arrays.sort(files);
+        return files;
     }
 
     public void saveAlphabeticalSort() throws IOException {
         System.out.println("Ingrese la ruta del directorio:");
-        directoryPath = scan.nextLine();
-        alphabeticalSorter();
+        String dirPath = scan.nextLine();
+        dirPath = pathNormalizer(dirPath);
+        validatePath(dirPath);
+        validateDirectory(dirPath);
+
+        File[] files = getSortedFiles(dirPath);
+        if (files.length == 0) return;
+
         System.out.println("Ingrese la ruta y nombre de guardado:");
-        outputPath = scan.nextLine();
-
+        String outputPath = scan.nextLine();
         outputPath = pathNormalizer(outputPath);
-        pathValidator(outputPath);
+        validatePath(outputPath);
 
-        writer = new FileWriter(outputPath);
 
-        try {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputPath))) {
             for (File file : files) {
-                writer.write(file + System.lineSeparator());
+                writer.write(file.getName());
+                writer.newLine();
             }
-            System.out.println("Archivo generado correctamente.");
-        } catch (IOException e) {
-            throw new IOException("No se ha podido generar el archivo.");
+            System.out.println("Archivo generado correctamente en: <" + outputPath + ">.");
         }
     }
 
-    private void directorySorter(File directoryToList) {
-        files = directoryToList.listFiles();
+    private void saveDirectoryTree(File currentDir, int level, BufferedWriter writer) throws IOException {
+        File[] files = currentDir.listFiles();
+        if (files == null || files.length == 0) return;
 
-        if (files == null) {
-            System.out.println("No hay nada para mostrar.");
-            return;
-        }
         Arrays.sort(files);
-    }
 
-    private void directoryTreeSaver(int level) throws IOException {
+        for (File file : files) {
+            String indent = "    ".repeat(level);
+            String type = file.isDirectory() ? "D" : "F";
+            String lastMod = new SimpleDateFormat("dd-MM-yyyy / HH:mm").format(file.lastModified());
 
-        try {
-            for (File file : files) {
-                String indent = "    ".repeat(level);
-                String type = file.isDirectory() ? "D" : "F";
-                String lastModification = new SimpleDateFormat("dd-MM-yyyy / HH:mm").format(file.lastModified());
+            writer.write(indent + "[" + type + "]--> " + file.getName() + "  (LM: " + lastMod + ")");
+            writer.newLine();
 
-                writer.write(indent + "[" + type + "]--> " + file.getName() + "  (LM: " + lastModification + ")"
-                        + System.lineSeparator());
-
-                if (file.isDirectory()) {
-                    directoryTreeSaver(level + 1);
-                }
+            if (file.isDirectory()) {
+                saveDirectoryTree(file, level + 1, writer);
             }
-        } catch (IOException e) {
-            throw new IOException("No se ha podido generar el archivo.");
+
         }
     }
 
-    public void directoryTreeGenerator() throws IOException {
-        System.out.println("Ingrese la ruta del directorio:");
-        directoryPath = scan.nextLine();
-        alphabeticalSorter();
+       public void directoryTreeGenerator () throws IOException {
+            System.out.println("Ingrese la ruta del directorio:");
+            String dirPath = scan.nextLine();
+            dirPath = pathNormalizer(dirPath);
+            validatePath(dirPath);
+            validateDirectory(dirPath);
 
-        directory = new File(directoryPath);
-        directorySorter(directory);
+            System.out.println("ingrese la ruta y nombre de guardado:");
+            String outputPath = scan.nextLine();
+            outputPath = pathNormalizer(outputPath);
+            validatePath(outputPath);
 
-        System.out.println("Ingrese la ruta y nombre de guardado:");
-        outputPath = scan.nextLine();
-        outputPath = pathNormalizer(outputPath);
-        pathValidator(outputPath);
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputPath))) {
+                saveDirectoryTree(new File(dirPath), 0, writer);
+                System.out.println("Árbol de directorio guardado en: <" + outputPath + ">.");
+            }
+        }
 
-        writer = new FileWriter(outputPath);
+        public void readAndPrintFile () {
+            System.out.println("Ingrese la ruta del archivo (.txt) que desea leer:");
+            String filePath = scan.nextLine();
+            filePath = pathNormalizer(filePath);
+            validatePath(filePath);
 
-        directoryTreeSaver(0);
+            File file = new File(filePath);
+            if (!file.exists() || !file.isFile()) {
+                System.out.println("El archivo no existe.");
+                return;
+            }
 
-        System.out.println("Archivo generado correctamente.");
-    }
+            try (Stream<String> lines = Files.lines(file.toPath(), StandardCharsets.UTF_8)) {
+                lines.forEach(System.out::println);
+            } catch (IOException e) {
+                System.out.println("No se pudo leer el archivo.");
+            }
+        }
 
-    public void readAndPrintFile() {
-        System.out.println("Ingrese la ruta del archivo (.txt) que desea leer:");
-        String filePath = scan.nextLine();
-        filePath = pathNormalizer(filePath);
-        pathValidator(filePath);
-        File file = new File(filePath);
-
-        try (Stream<String> lines = Files.lines(file.toPath(), StandardCharsets.UTF_8)) {
-            lines.forEach(System.out::println);
-        } catch (IOException e) {
-            System.out.println("No se pudo leer el archivo.");
+        public void closeScan () {
+            scan.close();
         }
     }
-}
 
 

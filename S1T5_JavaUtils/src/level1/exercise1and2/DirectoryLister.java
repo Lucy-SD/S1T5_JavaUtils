@@ -86,4 +86,8 @@ public class DirectoryLister {
         listAndTagDirectory(directory, 0);
 
     }
+
+    public void closeScanner() {
+        scan.close();
+    }
 }

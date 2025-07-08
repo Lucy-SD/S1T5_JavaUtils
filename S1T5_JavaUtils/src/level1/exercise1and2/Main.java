@@ -1,5 +1,6 @@
 package level1.exercise1and2;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 
@@ -10,34 +11,34 @@ public class Main {
         DirectoryLister directoryLister = new DirectoryLister();
         int choice;
 
-        try {
-            do {
-                System.out.println("""
-                        Elige una opción (0 - 2):
-                        1. Listar alfabéticamente un directorio;
-                        2. Ver el árbol de un directorio (por niveles y contenido);
-                        0. Salir.
-                        """);
+        do {
+            System.out.println("""
+                    \n=== MENÚ ===
+                    Elige una opción (0 - 2):
+                    1. Listar alfabéticamente un directorio;
+                    2. Ver el árbol de un directorio (por niveles y contenido);
+                    0. Salir.
+                    """);
+
+            try {
                 choice = scan.nextByte();
                 scan.nextLine();
 
                 switch (choice) {
-                    case 1:
-                        directoryLister.alphabeticalSorting();
-                        break;
-                    case 2:
-                        directoryLister.seeDirectoryTree();
-                        break;
-                    case 0:
+                    case 1 -> directoryLister.alphabeticalSorting();
+                    case 2 -> directoryLister.seeDirectoryTree();
+                    case 0 -> {
                         System.out.println("Adiós = )");
-                        break;
-                    default:
-                        System.out.println("Elija una opción correcta (0 a 2).\n");
+                        directoryLister.closeScanner();
+                        return;
+                    }
+                    default -> System.out.println("Elija una opción correcta (0 a 2).\n");
                 }
-
-            } while (choice != 0);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
+            } catch (InputMismatchException e) {
+                System.err.println("Error: debe ingresar un valor numérico (0-2)");
+                choice = -1;
+                scan.nextLine();
+            }
+        } while (true);
     }
 }

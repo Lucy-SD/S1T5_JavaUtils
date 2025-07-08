@@ -1,91 +1,116 @@
 # Manual de Compilación y Ejecución del Programa L1.E5:
 
+
+
 ## Estructura del Proyecto:
 
-El proyecto consta de los siguientes archivos:
-- `SerializationManager.java`: Contiene los métodos principales que implementan las funcionalidades del programa.
-- `User.java`: Contiene los atributos y métodos relacionados al usuario.
-- `Main.java`: Contiene el método `main` para interactuar con el usuario y ejecutar las funcionalidades.
+** Estructura de paquetes **
+    level1/
+        └── exercise5/
+            ├── SerializationManager.java
+            ├── User.java
+            └── Main.java
 
-### Funcionalidades:
+** Archivos principales **
+    - `SerializationManager.java`: Maneja la serialización y deserialización de usuarios.
+    - `User.java`: Representa un usuario (implementa Serializable).
+    - `Main.java`: Punto de entrada del programa con un menú interactivo.
 
-1. ** Serializar un usuario y guardarlo en un fichero **
+
+
+## Funcionalidades:
+
+** Serializado de usuario **
    - Solicita los datos del usuario y la ruta para guardar el archivo.
-2. ** Deserializar usuarios desde un fichero **
+
+** Deserializado de usuarios **
    - Solicita datos de la ruta donde se encuentra el archivo, y (si los datos son correctos), muestra el contenido por consola.
-3. ** Listar archivos .ser en un directorio **
+
+** Listado de archivos `.ser ` **
    - Solicita la ruta del directorio, y (si los existen) lista todos los archivos .ser que contiene.
 
-## Instrucciones de Compilación:
 
-1. ** Abrir un Terminal o Consola **
-   - Diríjase al directorio donde se encuentran los archivos `SerializationManager.java`, `User.java` y `Main.java`.
-2. ** Compilar los Archivos **
-   - Use el siguiente comando para compilar los archivos:
-     javac -d . SerializationManager.java User.java Main.java
-   - Esto generará una estructura de directorios basada en el paquete `exercise5` y creará los archivos `.class` correspondientes.
 
-## Instrucciones de Ejecución:
+## Instrucciones para Consola:
 
-1. ** Ejecutar el Programa **
-   - Ejecute el programa con el siguiente comando desde el directorio raíz del proyecto:
-     java exercise5.Main
-2. ** Interacción con el Usuario **
-   - El programa mostrará un menú con las siguientes opciones:
-     Elige una opción (0 - 3):
-            1. Serializar un usuario y guardarlo en un fichero;
-            2. Deserializar usuarios desde un fichero;
-            3. Listar archivos .ser en un directorio;
-            0. Salir.
-3. ** Seleccionar Funcionalidad **
-   - Introduzca el número asociado a la funcionalidad que desea ejecutar y presione **Enter**.
+### Compilación y Ejecución:
 
-## Funcionalidades Detalladas:
+** Abrir un Terminal o Consola **
+    - Abre una terminal en la carpeta raíz del proyecto (donde está `src`)
+        cd /ruta/completa/a/S1T5_JavaUtils
 
-### 1. ** Serializar un usuario y guardarlo en un fichero **
-   -- Descripción --
-     Solicita el nombre y la edad del usuario, y la ruta donde guardar el archivo .ser. Genera y guarda un archivo
-     con los datos del usuario, en la ruta solicitada.
-     - Seleccione la opción `1` en el menú.
-     - Introduzca <nombre del usuario>.
-     - Introduzca <edad del usuario>.
-     - Introduzca <ruta del directorio> donde desea guardarlo.
-   -- Salida esperada --
-     - Mensaje de que se ha generado el archivo correctamente.
+** Compila **
+   - Use el siguiente comando:
+        javac src/level1/exercise5/*.java
 
-### 2. ** Deserializar usuarios desde un fichero **
-   -- Descripción --
-     Solicita la ruta donde se encuentra el archivo .ser que se desea visualizar, lo lee y muestra por consola sus datos.
-   -- Cómo usarlo --
-     - Seleccione la opción `2` del menú.
-     - Introduzca <ruta del directorio> cuya información desea ver.
-   -- Salida esperada --
-     - Muestra por consola la información del usuario guardada dentro del archivo.
+** Ejecuta **
+   - Ejecute el siguiente comando:
+        java -cp src level1.exercise5.Main
 
-### 3. ** Listar archivos .ser en un directorio **
-   -- Descripción --
-     Solicita la ruta a la que se quiere acceder para ver el listado de archivos .ser, y (si existen) los muestra por
-     consola.
-   -- Cómo usarlo --
-     - Seleccione la opción `3` del menú.
-     - Introduzca <ruta del directorio> cuyo listado de archivos .ser desea ver.
-   -- Salida esperada --
-     - Muestra por consola el listado de todos los archivos .ser encontrados en la ruta indicada.
+
+
+## Uso del Programa:
+
+### Al ejecutar, aparecerá este menú:
+
+=== MENÚ ===
+Elija una opción (0 - 3)
+1. Serializar un usuario y guardarlo en un fichero;
+2. Deserializar usuarios desde un fichero;
+3. Listar archivos .ser en un directorio;
+0. Salir.
+
+** Serializado de usuario **
+    - Seleccione la opción `1` en el menú.
+    - Introduzca: <nombre del usuario>.
+                   <edad del usuario>.
+                   <ruta del archivo> `.ser` donde desea guardarlo (si no incluye extensión, se añade automáticamente).
+    - Salida: mensaje de que se ha generado el archivo correctamente en <ruta>.
+
+** Deserializado de usuarios **
+    - Seleccione la opción `2` del menú.
+    - Introduzca <ruta del archivo> `.ser` cuya información desea ver.
+    - Salida: información del usuario guardada dentro del archivo.
+
+** Listado de archivos `.ser`  **
+    - Seleccione la opción `3` del menú.
+    - Introduzca <ruta del directorio> cuyo listado de archivos `.ser` desea ver.
+    - Salida: listado de todos los archivos `.ser` encontrados en la ruta indicada.
+
+
 
 ## Manejo de Errores relacionados con directorios y rutas:
 
-- ** Errores **
-  - Si el directorio no existe:
-        "Error: Directorio inexistente."
+** Errores **
   - Si la ruta proporcionada está vacía:
-        "Error: La ruta está vacía."
-  - Si se ingresan caracteres alfabéticos en lugar de numéricos:
-        "Error. Por favor ingrese un valor numérico."
+        "Error: La ruta no puede estar vacía."
+  - Si no se encuentra el archivo:
+        "Error: No se encontró el archivo."
+  - Si se ingresas caracteres alfabéticos cuando se solicita la edad:
+         "Error. Por favor ingrese un valor numérico."
+  - Si se ingresan caracteres alfabéticos en lugar de numéricos en el menú:
+        "Error. Por favor ingrese un valor numérico (0-3)."
+
+
 
 ## Notas Adicionales:
 
-- Asegúrese de proporcionar rutas válidas y accesibles desde el sistema operativo.
-- El programa es compatible con sistemas operativos Windows, macOS y Linux, siempre que las rutas se introduzcan
-en el formato correcto para cada sistema.
+** Formatos de ruta **
+   - Windows: Usa `\\` o `/` en rutas (`C:\\carpeta` o `C:/carpeta`)
+   - Linux/macOS: Usa `/` (`/home/usuario`)
+
+** Auto-completado de extensión **
+    - Si no se escribe la extensión `.ser`, se agregará automáticamente.
+
+** Características técnicas **
+    - Serialización binaria con ObjectOutputStream.
+    - Filtrado inteligente de archivos `.ser`.
+    - Validación automática de rutas.
+
+** Requisitos **
+    - Java 8 o superior.
+    - Permisos de lectura/escritura en los directorios.
+
+
 
 Gracias por su Visita = )

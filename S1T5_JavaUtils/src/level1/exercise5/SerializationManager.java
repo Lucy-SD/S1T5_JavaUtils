@@ -108,5 +108,12 @@ public class SerializationManager {
             System.out.println("- " + file.getName());
         }
     }
+
+    public void closeScan() {
+        scan.close();
+    }
+
+
 }
+
 

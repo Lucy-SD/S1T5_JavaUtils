@@ -12,6 +12,6 @@ public class User implements Serializable {
     }
 
     public String toString () {
-        return "Nombre: " + this.name + " .Edad: " + this.age + ".\n";
+        return "Nombre: " + this.name + ". Edad: " + this.age + ".\n";
     }
 }
