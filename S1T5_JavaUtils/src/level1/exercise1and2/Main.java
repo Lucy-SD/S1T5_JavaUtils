@@ -1,5 +1,6 @@
 package level1.exercise1and2;
 
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -36,8 +37,9 @@ public class Main {
                 }
             } catch (InputMismatchException e) {
                 System.err.println("Error: debe ingresar un valor numérico (0-2)");
-                choice = -1;
                 scan.nextLine();
+            } catch (IllegalArgumentException e) {
+                System.err.println("Error: " + e.getMessage());
             }
         } while (true);
     }

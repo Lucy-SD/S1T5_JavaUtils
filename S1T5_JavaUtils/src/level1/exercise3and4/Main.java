@@ -39,7 +39,6 @@ public class Main {
                 }
             } catch (InputMismatchException e) {
                 System.err.println("Error: debe ingresar un valor numérico (0-3)");
-                choice = -1;
                 scan.nextLine();
             } catch (IOException | IllegalArgumentException e) {
                 System.err.println("Error: " + e.getMessage());

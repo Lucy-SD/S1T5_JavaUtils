@@ -42,7 +42,7 @@ public class DirectoryLister {
         files = directory.listFiles();
 
         if (files == null) {
-            System.out.println("El directorio está vacío.");
+            System.err.println("El directorio está vacío.");
             return;
         }
         System.out.println("Directorio listado alfabéticamente:\n");

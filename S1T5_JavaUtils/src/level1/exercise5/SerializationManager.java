@@ -11,8 +11,7 @@ public class SerializationManager {
 
     private String pathNormalizer(String pathToNormalize) {
         if (pathToNormalize == null || pathToNormalize.trim().isEmpty()) {
-            return ("Error: La ruta no puede estar vacía.");
-
+            return null;
         }
         return pathToNormalize.trim().replace("/", File.separator).replace("\\", File.separator);
     }
@@ -25,14 +24,6 @@ public class SerializationManager {
         return pathToValidate;
     }
 
-    private void directoryValidator(String directoryToValidate) {
-        directory = new File(directoryToValidate);
-
-        if (!directory.isDirectory() || !directory.exists()) {
-            System.out.println("La ruta no existe.");
-        }
-    }
-
     public void objectSerializer() {
 
         try {
@@ -40,7 +31,7 @@ public class SerializationManager {
             String name = scan.nextLine();
             System.out.println("Indique la edad del usuario:");
             while (!scan.hasNextInt()) {
-                System.out.println("Error. Por favor ingrese un valor numérico. Indique la edad:");
+                System.err.println("Error. Por favor ingrese un valor numérico. Indique la edad:");
                 scan.nextLine();
             }
             int age = scan.nextInt();
@@ -49,6 +40,12 @@ public class SerializationManager {
             System.out.println("Indique la ruta y el nombre del archivo (.ser) para guardar los usuarios serializados:");
             filePath = scan.nextLine();
             filePath = pathNormalizer(filePath);
+
+            if (filePath == null) {
+                System.err.println("Error: La ruta no puede estar vacía.");
+                return;
+            }
+
             filePath = pathValidator(filePath);
 
             User user = new User(name, age);
@@ -58,7 +55,7 @@ public class SerializationManager {
                 System.out.println("Usuario serializado correctamente en: " + filePath);
             }
         } catch (IOException e) {
-            System.out.println("Error: No se pudo guardar el usuario.");
+            System.err.println("Error: No se pudo guardar el usuario.");
         }
     }
 
@@ -67,12 +64,18 @@ public class SerializationManager {
         System.out.println("Indique la ruta del archivo (.ser) que contiene los usuarios serializados:");
         filePath = scan.nextLine();
         filePath = pathNormalizer(filePath);
+
+        if (filePath == null) {
+            System.err.println("Error: La ruta no puede estar vacía.");
+            return;
+        }
+
         filePath = pathValidator(filePath);
 
         File file = new File(filePath);
 
         if (!file.exists()) {
-            System.out.println("Error: No se encontró el archivo.");
+            System.err.println("Error: No se encontró el archivo.");
             return;
         }
 
@@ -80,7 +83,7 @@ public class SerializationManager {
             User user = (User) ois.readObject();
             System.out.println("Usuario deserializado:\n" + user);
         } catch (Exception e) {
-            System.out.println("Error: No se pudo leer el archivo.");
+            System.err.println("Error: No se pudo leer el archivo.");
         }
     }
 
@@ -89,7 +92,17 @@ public class SerializationManager {
         String directoryPath = scan.nextLine();
 
         directoryPath = pathNormalizer(directoryPath);
-        directoryValidator(directoryPath);
+
+        if (directoryPath == null) {
+            System.err.println("Error: La ruta no puede estar vacía.");
+            return;
+        }
+
+
+       if (!directory.isDirectory() || !directory.exists()) {
+            System.err.println("La ruta no existe.");
+            return;
+        }
 
         directory = new File(directoryPath);
 
@@ -100,7 +113,7 @@ public class SerializationManager {
             }
         });
         if (files == null || files.length == 0) {
-            System.out.println("No se encontraron archivos .ser en el directorio indicado.");
+            System.err.println("No se encontraron archivos .ser en el directorio indicado.");
             return;
         }
         System.out.println("Archivos .ser encontrados:\n");

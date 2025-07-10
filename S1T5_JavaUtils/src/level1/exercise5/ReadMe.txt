@@ -41,11 +41,11 @@
 
 ** Compila **
    - Use el siguiente comando:
-        javac src/level1/exercise5/*.java
+        javac -d outJava src/level1/exercise5/*.java
 
 ** Ejecuta **
    - Ejecute el siguiente comando:
-        java -cp src level1.exercise5.Main
+        java -cp outJava level1.exercise5.Main
 
 
 
