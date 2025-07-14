@@ -4,13 +4,13 @@
 
 ## Estructura del Proyecto:
 
-** Estructura de paquetes **
+**Estructura de paquetes**
     level1/
     └── exercise1and2/
         ├── DirectoryLister.java
         └── Main.java
 
-** Archivos principales **
+**Archivos principales**
     - `DirectoryLister.java`: Contiene la lógica para listar directorios y generar árboles.
     - `Main.java`: Punto de entrada del programa con un menú interactivo.
 
