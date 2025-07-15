@@ -13,9 +13,6 @@ public class DirectoryLister {
     private File[] files;
 
     private String pathNormalizer(String pathToNormalize) {
-        if (pathToNormalize == null) {
-            return null;
-        }
         return pathToNormalize.trim().replace("/", File.separator).replace("\\", File.separator);
     }
 
@@ -29,6 +26,7 @@ public class DirectoryLister {
         if (!directory.isDirectory() || !directory.exists()) {
             throw new IllegalArgumentException("Directorio inexistente.");
         }
+
     }
 
     public void alphabeticalSorting() {
@@ -41,10 +39,6 @@ public class DirectoryLister {
         directory = new File(path);
         files = directory.listFiles();
 
-        if (files == null) {
-            System.err.println("El directorio está vacío.");
-            return;
-        }
         System.out.println("Directorio listado alfabéticamente:\n");
         Arrays.sort(files);
         for (File file : files) {
@@ -55,10 +49,6 @@ public class DirectoryLister {
     private void listAndTagDirectory(File directoryToList, int level) {
         files = directoryToList.listFiles();
 
-        if (files == null) {
-            System.out.println("No hay nada para mostrar.");
-            return;
-        }
         Arrays.sort(files);
         for (File file : files) {
             String indent = "    ".repeat(level);

@@ -27,19 +27,19 @@ public class Main {
                 switch (choice) {
                     case 1 -> manager.objectSerializer();
                     case 2 -> manager.objectDeserializer();
-                    case 3 -> manager.serializeFilesLister();
+                    case 3 -> manager.filesLister();
                     case 0 -> {
                         System.out.println("Gracias por su visita = )");
                         manager.closeScan();
                         return;
                     }
-                    default -> System.out.println("Elija una opción válida (entre 0 y 3)");
+                    default -> System.out.println("Elija una opción válida (entre 0 y 3).");
                 }
             } catch (InputMismatchException e) {
-                System.err.println("Error: debe ingresar un valor numérico (0-3)");
+                System.err.println("Error: debe ingresar un valor numérico (0-3).");
                 scan.nextLine();
             } catch (NullPointerException e) {
-                System.err.println("Error: la ruta no existe");
+                System.err.println("Error: la ruta no existe.");
             }
         } while (true);
     }

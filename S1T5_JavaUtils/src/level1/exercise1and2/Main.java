@@ -1,6 +1,5 @@
 package level1.exercise1and2;
 
-import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 

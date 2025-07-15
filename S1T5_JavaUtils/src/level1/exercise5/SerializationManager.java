@@ -4,129 +4,133 @@ import java.io.*;
 import java.util.Scanner;
 
 public class SerializationManager {
-    private final Scanner scan = new Scanner(System.in);
-    private File directory;
-    private String filePath;
 
+    private final Scanner scan = new Scanner(System.in);
 
     private String pathNormalizer(String pathToNormalize) {
-        if (pathToNormalize == null || pathToNormalize.trim().isEmpty()) {
-            return null;
-        }
         return pathToNormalize.trim().replace("/", File.separator).replace("\\", File.separator);
     }
 
-    private String pathValidator(String pathToValidate) {
-
-        if (!pathToValidate.toLowerCase().endsWith(".ser")) {
-            pathToValidate += ".ser";
+    private void filePathValidator(String pathToValidate) {
+        if (pathToValidate == null || pathToValidate.isBlank()) {
+            throw new IllegalArgumentException("La ruta está vacía.");
         }
-        return pathToValidate;
+    }
+
+    private void directoryValidator(File directory) {
+        if (!directory.isDirectory()) {
+            throw new IllegalArgumentException("La ruta: <" + directory.getPath() + "> no corresponde a un directorio.");
+        }
+        if (!directory.exists()) {
+            throw new IllegalArgumentException("La ruta: <" + directory.getPath() + "> no existe.");
+        }
+    }
+
+    private String ensureSerExtension(String filePath) {
+        if (filePath.toLowerCase().endsWith(".ser")) {
+            return filePath;
+        }
+        return filePath + ".ser";
+    }
+
+    private String promptUserName() {
+        System.out.println("Indique el nombre el usuario:");
+        return scan.nextLine();
+    }
+
+    private int promptUserAge() {
+        System.out.println("Indique la edad del usuario:");
+        while (!scan.hasNextInt()) {
+            System.err.println("Error. Por favor ingrese un valor numérico. Indique la edad:");
+            scan.nextLine();
+        }
+        int age = scan.nextInt();
+        scan.nextLine();
+        return age;
+    }
+
+    private String promptFilePath() {
+        System.out.println("Indique la ruta y el nombre del archivo(.ser):");
+        return pathNormalizer(scan.nextLine());
+    }
+
+    private String promptDirectoryPath() {
+        System.out.println("Indique el directorio donde buscar archivos .ser:");
+        return pathNormalizer(scan.nextLine());
+    }
+
+    private User createUser() {
+        String name = promptUserName();
+        int age = promptUserAge();
+        return new User(name, age);
+    }
+
+    private void userSerializer(User user, String filePath) throws IOException {
+
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
+            oos.writeObject(user);
+        }
+    }
+
+    private User userDeserilizer(String filePath) throws IOException, ClassNotFoundException {
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
+            return (User) ois.readObject();
+        }
+    }
+
+    private File[] serFilesLister(File directory) {
+        return directory.listFiles((dir, name) -> name.toLowerCase().endsWith(".ser"));
     }
 
     public void objectSerializer() {
-
         try {
-            System.out.println("Indique el nombre el usuario:");
-            String name = scan.nextLine();
-            System.out.println("Indique la edad del usuario:");
-            while (!scan.hasNextInt()) {
-                System.err.println("Error. Por favor ingrese un valor numérico. Indique la edad:");
-                scan.nextLine();
-            }
-            int age = scan.nextInt();
-            scan.nextLine();
-
-            System.out.println("Indique la ruta y el nombre del archivo (.ser) para guardar los usuarios serializados:");
-            filePath = scan.nextLine();
-            filePath = pathNormalizer(filePath);
-
-            if (filePath == null) {
-                System.err.println("Error: La ruta no puede estar vacía.");
-                return;
-            }
-
-            filePath = pathValidator(filePath);
-
-            User user = new User(name, age);
-
-            try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
-                oos.writeObject(user);
-                System.out.println("Usuario serializado correctamente en: " + filePath);
-            }
-        } catch (IOException e) {
-            System.err.println("Error: No se pudo guardar el usuario.");
+            User user = createUser();
+            String filePath = ensureSerExtension(promptFilePath());
+            filePathValidator(filePath);
+            userSerializer(user, filePath);
+            System.out.println("Usuario serializado correctamente en: " + filePath);
+        } catch (IllegalArgumentException | IOException e) {
+            System.err.println("Error: " + e.getMessage());
         }
     }
 
     public void objectDeserializer() {
-
-        System.out.println("Indique la ruta del archivo (.ser) que contiene los usuarios serializados:");
-        filePath = scan.nextLine();
-        filePath = pathNormalizer(filePath);
-
-        if (filePath == null) {
-            System.err.println("Error: La ruta no puede estar vacía.");
-            return;
-        }
-
-        filePath = pathValidator(filePath);
-
-        File file = new File(filePath);
-
-        if (!file.exists()) {
-            System.err.println("Error: No se encontró el archivo.");
-            return;
-        }
-
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
-            User user = (User) ois.readObject();
+        try {
+            String filePath = ensureSerExtension(promptFilePath());
+            filePathValidator(filePath);
+            User user = userDeserilizer(filePath);
             System.out.println("Usuario deserializado:\n" + user);
-        } catch (Exception e) {
-            System.err.println("Error: No se pudo leer el archivo.");
+        } catch (IllegalArgumentException | IOException | ClassNotFoundException e) {
+            System.err.println("Error: " + e.getMessage());
         }
     }
 
-    public void serializeFilesLister() {
-        System.out.println("Indique el directorio donde buscar archivos .ser:");
-        String directoryPath = scan.nextLine();
-
-        directoryPath = pathNormalizer(directoryPath);
-
-        if (directoryPath == null) {
-            System.err.println("Error: La ruta no puede estar vacía.");
-            return;
-        }
-
-
-       if (!directory.isDirectory() || !directory.exists()) {
-            System.err.println("La ruta no existe.");
-            return;
-        }
-
-        directory = new File(directoryPath);
-
-        File[] files = directory.listFiles(new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String name) {
-                return name.toLowerCase().endsWith(".ser");
+    public void filesLister() {
+        try {
+            String dirPath = promptDirectoryPath();
+            if (dirPath == null) {
+                throw new IllegalArgumentException("La ruta está vacía.");
             }
-        });
-        if (files == null || files.length == 0) {
-            System.err.println("No se encontraron archivos .ser en el directorio indicado.");
-            return;
-        }
-        System.out.println("Archivos .ser encontrados:\n");
-        for (File file : files) {
-            System.out.println("- " + file.getName());
+
+            File directory = new File(dirPath);
+            directoryValidator(directory);
+
+            File[] serFiles = serFilesLister(directory);
+            if (serFiles == null || serFiles.length == 0) {
+                System.err.println("No se encontraron archivos `.ser` en el directorio.");
+                return;
+            }
+            System.out.println("Archivos `.ser` encontrados:");
+            for (File file : serFiles) {
+                System.out.println("- " + file.getName());
+            }
+        } catch (IllegalArgumentException e) {
+            System.err.println("Error: " + e.getMessage());
         }
     }
 
     public void closeScan() {
         scan.close();
     }
-
-
 }
-
-
